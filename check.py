@@ -17,8 +17,8 @@ SUPPORTED_DATASET = [
 ]
 
 SUPPORTED_MODEL = [
-    "Llama-3.2-1B-Instruct-q0f32-MLC",
-    "Llama-3.2-3B-Instruct-q0f32-MLC",
+    "Llama-3.2-1B-Instruct-q0f16-MLC",
+    "Llama-3.2-3B-Instruct-q0f16-MLC",
     "Llama-3-8B-Instruct-q0f16-MLC",
     "Qwen2.5-0.5B-Instruct-q0f32-MLC",
     "Qwen2.5-3B-Instruct-q0f16-MLC",
@@ -820,13 +820,13 @@ if __name__ == "__main__":
         "--output-root",
         type=str,
         required=True,
-        help="The root of the output file.",
+        help="The root of the raw output file.",
     )
     parser.add_argument(
         "--final-root",
         type=str,
         required=True,
-        help="The root of the output file.",
+        help="The root of the summary file.",
     )
     args = parser.parse_args()
     main(args)

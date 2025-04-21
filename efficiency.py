@@ -138,6 +138,7 @@ def main(args: argparse.argparse.Namespace):
     def _main():
         tokenizer = AutoTokenizer.from_pretrained(args.tokenizer)
         dataset = create_dataset(args, tokenizer)
+        dataset.gen_warmup_dataset()
         f_create_api_endpoint = functools.partial(create_api_endpoint, args)
         pipelines = create_pipelines(args, f_create_api_endpoint, dataset)
         reports = []
@@ -159,17 +160,18 @@ def main(args: argparse.argparse.Namespace):
         # Construct data frame
         df = convert_reports_to_df(reports)
         print(df)
-        if not os.path.exists(args.output):
-            os.makedirs(args.output)
-        if not os.path.exists(f"{args.output}/bench.json"):
+        output_path = f"{args.output}/{args.api_endpoint}"
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)
+        if not os.path.exists(f"{output_path}/bench.json"):
             bench = {}
         else:
-            with open(f"{args.output}/bench.json", "r") as f:
+            with open(f"{output_path}/bench.json", "r") as f:
                 bench = json.load(f)
-        if os.path.basename(args.tokenizer) not in bench:
-            bench[os.path.basename(args.tokenizer)] = {}
-        if args.dataset not in bench[os.path.basename(args.tokenizer)]:
-            bench[os.path.basename(args.tokenizer)][args.dataset] = {}
+        if args.model not in bench:
+            bench[args.model] = {}
+        if args.dataset not in bench[args.model]:
+            bench[args.model][args.dataset] = {}
         if args.use_stag:
             if args.use_jf:
                 cate = "use_stag_jf"
@@ -177,11 +179,11 @@ def main(args: argparse.argparse.Namespace):
                 cate = "use_stag_no_jf"
         else:
             cate = "no_stag" 
-        bench[os.path.basename(args.tokenizer)][args.dataset][cate] = df.to_dict(orient="records")[0]
-        with open(f"{args.output}/bench.json", "w") as f:
+        bench[args.model][args.dataset][cate] = df.to_dict(orient="records")[0]
+        with open(f"{output_path}/bench.json", "w") as f:
             json.dump(bench, f, indent=4)
         
-        logger.info("Benchmark results dumped to file %s/bench.json", args.output)
+        logger.info("Benchmark results dumped to file %s/bench.json", output_path)
         if args.debug_dump:
             debug_dump_filepath = (
                 args.output[:-4] if args.output.endswith(".csv") else args.output
@@ -217,6 +219,12 @@ if __name__ == "__main__":
         choices=SUPPORTED_BACKENDS,
         default="openai",
         help="The API endpoint API for benchmarking.",
+    )
+    parser.add_argument(
+        "--model",
+        type=str,
+        required=True,
+        help="The name of the model.",
     )
     parser.add_argument(
         "--tokenizer",
@@ -424,7 +432,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--use-stag",
         action="store_true",
-        help="Whether to set stag.",
+        help="Whether to set structural tag.",
     )
     parser.add_argument(
         "--use-jf",

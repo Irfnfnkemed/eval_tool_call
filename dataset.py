@@ -107,6 +107,7 @@ class GorillaDataset(Dataset):  # pylint: disable=too-few-public-methods
     ) -> None:
         self.tokenizer = tokenizer
         self.use_jf = use_jf
+        self.use_stag = use_stag
         self.gorilla_data = []
         base_url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/main/berkeley-function-call-leaderboard/data"
         id = 0
@@ -193,10 +194,6 @@ class GorillaDataset(Dataset):  # pylint: disable=too-few-public-methods
                         tokenizer.encode(message["content"], add_special_tokens=False)
                     )
                 item["num_tokens"] = num_tokens
-        if not use_stag:
-            for item in self.gorilla_data:
-                for tool in item["tool"]:
-                    tool["function"]["strict"] = False
                     
     def gen_warmup_dataset(self):
         """Generate a warmup dataset for the benchmark."""
@@ -218,19 +215,59 @@ class GorillaDataset(Dataset):  # pylint: disable=too-few-public-methods
                 output_length = output_len
             else:
                 output_length = 1024
+            if self.use_stag:
+                response_format={
+                        "type": "structural_tag",
+                        "tags": [
+                            {
+                                "begin": '{{"name": "{func_name}", "parameters":'.format(func_name=tool['function']['name']),
+                                "schema": json.dumps({
+                                            "properties": tool['function']['parameters']['properties'],
+                                            "required": tool['function']['parameters']['required'],
+                                            "type": tool['function']['parameters']['type'],
+                                        }),
+                                "end": "}"
+                            } 
+                            for tool in entry["tool"]
+                        ],
+                        "triggers": ['{"name":'],
+                    }
+            else:
+                response_format = {
+                    "type": "text",
+                }
             request_records.append(
                 RequestRecord(
                     request_id=entry["id"],
                     chat_cmpl=ChatCompletionRequest(
-                        messages=[
+                        messages= [
+                            ChatCompletionMessage(
+                                content=(
+                                    "Tool Instructions:"
+                                    "You have access to the following tool functions:"
+                                    f"{entry['tool']}"
+                                    "If a you choose to call a function, you should ONLY reply in the following format:"
+                                    '`{"name": func_name, "parameters": parameters(JSON dict)}`'
+                                    "Here is an example,"
+                                    '`{"name": "get_time", "parameters": {"location": "Pittsburgh"}}}}`'
+                                    "Reminder:"
+                                    "- Function calls MUST follow the specified format"
+                                    "- Required parameters MUST be specified"
+                                    "- You should not repeat or miss the call"
+                                    "- You should response with at least one function calling"
+                                ),
+                                role="system"
+                            )
+                        ] +
+                        [
                             ChatCompletionMessage(
                                 content=message["content"], role=message["role"]
                             )
                             for message in entry["question"]
                         ],
+                        response_format=response_format,
                         model="",
                         max_tokens=output_length,
-                        tools=entry["tool"],
                         debug_config=DebugConfig(grammar_execution_mode= "jump_forward" if self.use_jf else "constraint")
                     ),
                     metrics=Metrics(

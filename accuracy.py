@@ -74,18 +74,31 @@ def _parse_mlc_engine_config(config_str: Optional[str]) -> EngineConfig:
         prefix_cache_mode=engine_config_override.prefix_cache_mode,
     )
 
-def convert_calls_to_json(calls: List[ChatToolCall]) -> List[Dict[str, Any]]:
+def convert_calls_to_json(stringified_calls: str) -> List[Dict[str, Any]]:
     """Convert the list of ChatToolCall to a list of dict."""
-    result = []
-    for call in calls:
-        call_dict = {
-            "function": {
-                "name": call.function.name,
-                "arguments": call.function.arguments,
-            }
-        }
-        result.append(call_dict)
-    return result
+    
+    function_calls_json = []
+    start = 0
+    while True:
+        index = stringified_calls.find('{"name":', start)
+        if index == -1:
+            break
+        try:
+            decoder = json.JSONDecoder()
+            result, end_index = decoder.raw_decode(stringified_calls, index)
+        except:  # pylint: disable=bare-except
+            start = index + 1
+            continue
+        start = end_index
+        if not isinstance(result, dict) or "name" not in result or "parameters" not in result:
+            continue
+        function_calls_json.append({
+                                    "function": {
+                                        "name": result["name"], 
+                                        "arguments": result["parameters"]}
+                                    }
+                                    )
+    return function_calls_json
 
 def _launch_mlc_server(args: argparse.argparse.Namespace):
     return mlc_llm.serve.PopenServer(
@@ -155,27 +168,17 @@ def main(args: argparse.argparse.Namespace):
         f_create_api_endpoint = functools.partial(create_api_endpoint, args)
         pipelines = create_pipelines(args, f_create_api_endpoint, dataset)
         store_record = []
-        output_dir = f"{args.output}/{os.path.basename(args.tokenizer)}/{args.dataset}/{'use_stag' if args.use_stag else 'no_stag'}/"
+        output_dir = f"{args.output}/{args.model}/{args.dataset}/{'use_stag' if args.use_stag else 'no_stag'}/"
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
         for i, pipeline in enumerate(pipelines):
             report, request_records = run_pipeline(pipeline, dataset, tokenizer, args)
             for request in request_records:
                 store_record.append({"id": request.request_id})
-                if len(request.chat_cmpl.messages) >= 2:
-                    store_record[-1]["output"] = request.chat_cmpl.messages[-1].content
-                if (
-                    len(request.chat_cmpl.messages) >= 2
-                    and request.chat_cmpl.messages[-1].tool_calls is not None
-                ):
-                    store_record[-1]["call"] = convert_calls_to_json(
-                        request.chat_cmpl.messages[-1].tool_calls
-                    )
-
+                store_record[-1]["output"] = request.output_str
+                store_record[-1]["call"] = convert_calls_to_json(request.output_str)
             with open(f"{output_dir}/result.json", "w") as f:
                 json.dump(store_record, f, indent=4)
-
-        
 
     if mlc_server is not None:
         with mlc_server:
@@ -204,6 +207,12 @@ if __name__ == "__main__":
         choices=SUPPORTED_BACKENDS,
         default="openai",
         help="The API endpoint API for benchmarking.",
+    )
+    parser.add_argument(
+        "--model",
+        type=str,
+        required=True,
+        help="The name of the model.",
     )
     parser.add_argument(
         "--tokenizer",
@@ -411,7 +420,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--use-stag",
         action="store_true",
-        help="Whether to set stag.",
+        help="Whether to set structural tag.",
     )
     parser.add_argument(
         "--use-jf",

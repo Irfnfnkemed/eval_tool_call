@@ -118,50 +118,6 @@ def draw(args: argparse.ArgumentParser, summary: Dict):
         bbox_inches="tight",
     )
 
-    # Third figure - Latency (single plot doesn't need spacing adjustments)
-    df = pd.read_csv(f"{args.summary_root}/latency.csv")
-    fig, ax = plt.subplots(1, 1, figsize=(10, 10))
-    dataset = datasets[0]
-    draw_info = {}
-    for model in summary:
-        draw_info[model] = summary[model][dataset]
-    for i, bar in enumerate(bars):
-        values = [
-            df.query(f"model == '{model}' & use_stag == {bar == 'use_stag'}")[
-                "end_to_end_latency_s.mean"
-            ].iloc[0]
-            for model in models
-        ]
-        ax.bar(x + i * (width + gap), values, width, color=colors[i], label=bar)
-    ax.set_xticks(x + width / 2)
-    ax.set_xlabel("Models", fontsize=15)
-    ax.set_ylabel("Average E2E Latency (ms)", fontsize=15)
-    ax.set_title(dataset.replace("_", "-"), fontsize=25, pad=20)  # Added pad
-    ax.set_xticklabels(
-        [model.rstrip("-Instruct-q0f16-MLC").rstrip("-Instruct-q0f32-MLC") for model in models],
-        rotation=0,
-        ha="center",
-        fontsize=16,
-    )
-    legend_handles = [
-        plt.Rectangle((0, 0), 1, 1, color=colors[i]) for i in range(2)
-    ]
-    plt.subplots_adjust(bottom=0.2, top=0.85, left=0.05, right=0.95)
-    fig.legend(
-        handles=legend_handles,
-        labels=["without structual tag", "with structual tag"],
-        loc="lower center",
-        bbox_to_anchor=(0.5, 0),
-        ncol=2,
-        fontsize=16,
-    )
-    plt.tight_layout(rect=[0, 0.1, 1, 0.9])
-    plt.savefig(
-        f"{args.summary_root}/e2e_latency.png",
-        dpi=300,
-        bbox_inches="tight",
-    )
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Draw")
     parser.add_argument(
