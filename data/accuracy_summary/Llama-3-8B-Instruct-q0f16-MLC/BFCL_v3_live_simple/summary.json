@@ -2525,7 +2525,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc99bc90>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b82c7490>"
         },
         "input": [
             {
@@ -2643,7 +2643,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc99bc90>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b82c7490>"
         },
         "input": [
             {
@@ -8834,7 +8834,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc999e10>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b82c76d0>"
         },
         "use_stag": {
             "output": "{\"name\": \"open_meteo_api.fetch_weather_data\", \"parameters\":{\"coordinates\":[-122.2730, 37.8715], \"units\": \"Celsius\"}}",
@@ -8854,7 +8854,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc999dd0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b82c77d0>"
         },
         "input": [
             {
@@ -11008,8 +11008,8 @@
                 }
             ],
             "success": false,
-            "err_type": "PARA_KEY_ERROR",
-            "err_msg": "missing arg: auto_loan_payment_start"
+            "err_type": "PARA_VALUE_ERROR",
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b82c7290>"
         },
         "use_stag": {
             "output": "Here is the classification of the customer queries into the appropriate categories:\n\n`{\"name\": \"record\", \"parameters\":{\"acc_routing_start\": [\"'Please provide the routing number for my account.', 'Please give me the account number for my business checking account.'\"], \n\"activate_card_start\": [\"'Activate my new card for loyalty program enrollment', 'Can you walk me through the activation process for my new bank card?'\"], \n\"atm_finder_start\": [\"'Looking for the closest ATM for cash withdrawal', can you assist me in finding one?', 'Locate ATM for immediate cash needs', 'Find ATM for urgent cash needs', 'Need to find ATM for quick cash emergency', 'Searching for ATM for money withdrawal'\"], \n\"auto_loan_payment_start\": [\"\"], \n\"bank_hours_start\": [\"\"], \n\"cancel_card_start\": [\"'I want to cancel my card and ensure the safety of my account.'\"], \n\"card_rewards_start\": [\"'What rewards are offered for my card?', 'What rewards are available on my card?', 'What are the benefits of using my rewards points for entertainment?'\"], \n\"cashier_check_start\": [\"'Can I purchase a cashier's check through this chat service?', 'I need a cashier's check, how can I get one?'\"], \n\"clean_goodbye_start\": [\"'I'm done here. Goodbye!', 'Thanks for your assistance. Goodbye!', 'You're amazing. Goodbye!'\"]}}`",
@@ -11234,7 +11234,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc99a250>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b82c7290>"
         },
         "use_stag": {
             "output": "{\"name\": \"record\", \"parameters\":{\n\"faq_describe_telephone_banking_start\": [\"How do I sign up for tele-banking services through the mobile app?\", \"Can I sign up for telephone banking services?\", \"Where can I find the application for telephone banking services?\"],\n\"bank_hours_start\": [\"Are any banks open in Sri Lanka right now?\"],\n\"faq_describe_accounts_start\": [\"I'm interested in opening a long term savings account. What options do you have?\", \"Do you offer any special accounts for children or minors?\", \"Do you offer any special accounts for individuals looking to save for a home purchase or renovation?\"]\n}}",
@@ -11262,7 +11262,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc99a0d0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b82c7490>"
         },
         "input": [
             {
@@ -11492,9 +11492,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc99a250>"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {
@@ -11754,9 +11754,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] wrong length of ['Where is the closest ATM to my current location?', 'Find ATM for immediate cash needs'].[ideal 1] wrong length of ['Where is the closest ATM to my current location?', 'Find ATM for immediate cash needs']."
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {
@@ -15348,7 +15348,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: pip install transformers Th\u1ecb\u00e8 https://huggingface.co, ideal-opt: ['start https://huggingface.co']"
+            "err_msg": "value not match: pip install transformers Th\u1ecb\u00e8 https://huggingface.co, ideal-opt: ['start https://hf-mirror.com']"
         },
         "use_stag": {
             "output": "{\"name\": \"cmd_controller.execute\", \"parameters\":{\"command\": \"pip install --upgrade transformers && pip install hf-mirror && pip install accelerate [----progress 0] --trusted-host huggingface.co\"}}",
@@ -15364,12 +15364,12 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: pip install --upgrade transformers && pip install hf-mirror && pip install accelerate [----progress 0] --trusted-host huggingface.co, ideal-opt: ['start https://huggingface.co']"
+            "err_msg": "value not match: pip install --upgrade transformers && pip install hf-mirror && pip install accelerate [----progress 0] --trusted-host huggingface.co, ideal-opt: ['start https://hf-mirror.com']"
         },
         "input": [
             {
                 "role": "user",
-                "content": "open huggingface using the start command and through the link: https://huggingface.co"
+                "content": "open huggingface using the start command and through the link: https://hf-mirror.com"
             }
         ],
         "tools": [
@@ -15407,7 +15407,7 @@
                 "name": "cmd_controller.execute",
                 "arguments": {
                     "command": [
-                        "start https://huggingface.co"
+                        "start https://hf-mirror.com"
                     ],
                     "unit": [
                         "",
@@ -16704,7 +16704,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc999e10>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b82c77d0>"
         },
         "input": [
             {
@@ -22241,9 +22241,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_KEY_ERROR",
-            "err_msg": "unknown arg: dontcare"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"Movies_3_FindMovies\", \"parameters\":{\"directed_by\": \"Simon Curtis\", \"genre\": \"Drama\", \"cast\": \"dontcare\"}}",
@@ -22259,9 +22259,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['McKinley Belcher III']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {

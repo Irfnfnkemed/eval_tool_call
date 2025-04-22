@@ -32455,7 +32455,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc9d3f50>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b8877990>"
         },
         "input": [
             {
@@ -34221,8 +34221,8 @@
                 }
             ],
             "success": false,
-            "err_type": "PARA_KEY_ERROR",
-            "err_msg": "missing arg: ingredients"
+            "err_type": "TYPE_ERROR",
+            "err_msg": "wrong type 2: not int"
         },
         "use_stag": {
             "output": "{\"name\": \"recipe_search\", \"parameters\":{\"dietary_restriction\": \"vegetarian\", \"ingredients\": [\"pasta\", \"cheese\", \"tomato\", \"bell pepper\", \"onion\", \"garlic\", \"olive oil\", \"salt\", \"pepper\"], \"servings\": 2}}",
@@ -35651,7 +35651,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc9d3e90>[ideal 1] <__main__.Error object at 0x7f39cc9d3f50>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b8877a50>[ideal 1] <__main__.Error object at 0x7495b8877a10>"
         },
         "input": [
             {

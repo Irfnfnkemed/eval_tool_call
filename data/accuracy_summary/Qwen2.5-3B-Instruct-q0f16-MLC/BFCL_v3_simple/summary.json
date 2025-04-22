@@ -7717,7 +7717,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cdcb0cd0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b9319610>"
         },
         "input": [
             {
@@ -32633,7 +32633,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cdcb0cd0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b8803310>"
         },
         "use_stag": {
             "output": "{\"name\": \"card_games.poker_determine_winner\", \"parameters\":{\"player1\": \"John\", \"hand1\": [\"8\\\\u2660\", \"10\\\\u2660\", \"J\\\\u2660\", \"Q\\\\u2660\", \"K\\\\u2660\"], \"player2\": \"Mike\", \"hand2\": [\"9\\\\u2669\", \"J\\\\u2669\", \"10\\\\u2669\", \"Q\\\\u2669\", \"K\\\\u2669\"]}}",
@@ -32664,7 +32664,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cdcb0cd0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b931a490>"
         },
         "input": [
             {
@@ -36089,7 +36089,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cdcb12d0>[ideal 1] <__main__.Error object at 0x7f39cdcb0cd0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b8803310>[ideal 1] <__main__.Error object at 0x7495b8803310>"
         },
         "use_stag": {
             "output": "{\"name\": \"walmart.check_price\", \"parameters\":{\"items\":[\"pumpkin\",\"egg\"],\"quantities\":[3,12], \"store_location\": \"all\"}}",
@@ -36113,7 +36113,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cdcb0cd0>[ideal 1] <__main__.Error object at 0x7f39cdcb0cd0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b9319d10>[ideal 1] <__main__.Error object at 0x7495b931ba10>"
         },
         "input": [
             {

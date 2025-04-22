@@ -82,14 +82,18 @@ class OpenAIChatEndPoint(APIEndPoint):
             and request_record.chat_cmpl.debug_config.ignore_eos
         ):
             payload["ignore_eos"] = True
-            
+
         if self.api_type == "sglang":
-            if payload["response_format"] is not None and payload["response_format"]["type"] == "structural_tag":
-                payload["response_format"]["structures"] = payload["response_format"].pop("tags")
+            if (
+                payload["response_format"] is not None
+                and payload["response_format"]["type"] == "structural_tag"
+            ):
+                payload["response_format"]["structures"] = payload[
+                    "response_format"
+                ].pop("tags")
                 for tag in payload["response_format"]["structures"]:
                     tag["schema"] = json.loads(tag["schema"])
-            
-        
+
         generated_text = ""
         first_chunk_output_str = ""
         time_to_first_token_s = None
@@ -97,7 +101,9 @@ class OpenAIChatEndPoint(APIEndPoint):
         server_metrics = None
 
         try:
-            async with self.client.post(self.url, json=payload, headers=self.headers) as response:
+            async with self.client.post(
+                self.url, json=payload, headers=self.headers
+            ) as response:
                 assert response.status == 200, await response.text()
                 if payload["stream"]:
                     async for chunk in response.content:
@@ -153,7 +159,9 @@ class OpenAIChatEndPoint(APIEndPoint):
                         # pylint: enable=line-too-long
                         # fmt: on
         except Exception:  # pylint: disable=broad-except
-            error_msg = "API endpoint errored when sending request: " + traceback.format_exc()
+            error_msg = (
+                "API endpoint errored when sending request: " + traceback.format_exc()
+            )
             logger.info(error_msg)
             finish_time = time.monotonic()
             request_record.output_str = generated_text
@@ -202,5 +210,11 @@ SUPPORTED_BACKENDS = [
 def create_api_endpoint(args: argparse.Namespace) -> APIEndPoint:
     """Create an API endpoint instance with regard to the specified endpoint kind."""
     if args.api_endpoint in ["mlc", "sglang"]:
-        return OpenAIChatEndPoint(args.host, args.port, args.api_endpoint, args.timeout, args.include_server_metrics)
+        return OpenAIChatEndPoint(
+            args.host,
+            args.port,
+            args.api_endpoint,
+            args.timeout,
+            args.include_server_metrics,
+        )
     raise ValueError(f'Unrecognized endpoint "{args.api_endpoint}"')

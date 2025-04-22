@@ -6341,7 +6341,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cdac2350>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b931b4d0>"
         },
         "use_stag": {
             "output": "{\"name\": \"sort_list\", \"parameters\":{\"elements\": [\"Sam\", \"Alice\", \"Jack\"], \"order\": \"asc\"}}",
@@ -20478,7 +20478,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cdac2190>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b931a710>"
         },
         "input": [
             {

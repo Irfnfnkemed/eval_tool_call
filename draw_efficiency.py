@@ -6,23 +6,20 @@ from typing import Dict
 import matplotlib.pyplot as plt
 import numpy as np
 
-models = [[
-    "Llama-3.2-1B-Instruct-q0f16-MLC",
-    "Llama-3.2-3B-Instruct-q0f16-MLC",
-    "Llama-3.1-8B-Instruct-q0f16-MLC"
-],
-[
-    "Llama-3.2-1B-Instruct",
-    "Llama-3.2-3B-Instruct",
-    "Llama-3.1-8B-Instruct"
-],     
+models = [
+    [
+        "Llama-3.2-1B-Instruct-q0f16-MLC",
+        "Llama-3.2-3B-Instruct-q0f16-MLC",
+        "Llama-3.1-8B-Instruct-q0f16-MLC",
+    ],
+    ["Llama-3.2-1B-Instruct", "Llama-3.2-3B-Instruct", "Llama-3.1-8B-Instruct"],
 ]
 dataset = "BFCL_v3_multiple"
 query_to_title = {
     "end_to_end_latency_s.mean": "Average end-to-end latency (s)",
     "time_per_output_token_s.mean": "Average time per output token (s)",
     "time_to_first_token_s.mean": "Average time to first token (s)",
-    "output_tokens.mean": "Average output tokens"
+    "output_tokens.mean": "Average output tokens",
 }
 
 
@@ -47,9 +44,12 @@ def draw(args, mlc: Dict, sglang: Dict, query: str):
         ax.set_title(["MLC-LLM", "SGLang"][ax_idx], fontsize=25, pad=20)  # Added pad
         ax.set_xticks(x + width / 2)
         ax.set_ylabel(query_to_title[query], fontsize=18)
-        ax.tick_params(axis='y', labelsize=16)
+        ax.tick_params(axis="y", labelsize=16)
         ax.set_xticklabels(
-            [model.rstrip("-Instruct-q0f16-MLC").rstrip("-Instruct-q0f32-MLC") for model in models[ax_idx]],
+            [
+                model.rstrip("-Instruct-q0f16-MLC").rstrip("-Instruct-q0f32-MLC")
+                for model in models[ax_idx]
+            ],
             rotation=0,
             ha="center",
             fontsize=16,
@@ -60,7 +60,9 @@ def draw(args, mlc: Dict, sglang: Dict, query: str):
             ]
 
     # Adjust subplot spacing and title position
-    plt.subplots_adjust(bottom=0.2, top=0.85, left=0.05, right=0.95, wspace=5, hspace=0.5)  # Increased wspace
+    plt.subplots_adjust(
+        bottom=0.2, top=0.85, left=0.05, right=0.95, wspace=5, hspace=0.5
+    )  # Increased wspace
     fig.legend(
         handles=legend_handles,
         labels=["without structual tag", "with structual tag"],
@@ -70,9 +72,7 @@ def draw(args, mlc: Dict, sglang: Dict, query: str):
         fontsize=16,
     )
     plt.tight_layout(rect=[0, 0.1, 1, 0.9])
-    plt.savefig(
-        f"{args.bench_root}/{query}.png", dpi=300, bbox_inches="tight"
-    )
+    plt.savefig(f"{args.bench_root}/{query}.png", dpi=300, bbox_inches="tight")
 
 
 if __name__ == "__main__":
@@ -85,8 +85,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
     with open(f"{args.bench_root}/mlc/bench.json", mode="r", encoding="utf-8") as file:
         mlc = json.load(file)
-    with open(f"{args.bench_root}/sglang/bench.json", mode="r", encoding="utf-8") as file:
+    with open(
+        f"{args.bench_root}/sglang/bench.json", mode="r", encoding="utf-8"
+    ) as file:
         sglang = json.load(file)
-    draw(args, mlc, sglang, "end_to_end_latency_s.mean")
-    draw(args, mlc, sglang, "time_per_output_token_s.mean")
-    draw(args, mlc, sglang, "time_to_first_token_s.mean")
+    draw(args, mlc, sglang, "output_tokens.mean")
+    # draw(args, mlc, sglang, "time_per_output_token_s.mean")
+    # draw(args, mlc, sglang, "time_to_first_token_s.mean")

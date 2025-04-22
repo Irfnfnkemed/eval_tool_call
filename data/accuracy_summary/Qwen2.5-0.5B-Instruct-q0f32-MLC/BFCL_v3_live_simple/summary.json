@@ -2633,7 +2633,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc9df350>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b9605f10>"
         },
         "use_stag": {
             "output": "{\"name\": \"uber.eat.order\", \"parameters\":{\"restaurant\": \"McDonald's\", \"items\": [\"Pizza\"], \"quantities\": [1, 2, 3, 4, 5]}}\"",
@@ -8826,7 +8826,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc9df590>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b9606150>"
         },
         "use_stag": {
             "output": "{\"name\": \"sort_array\", \"parameters\":{\"array\":[1,54,3,1,76,2343,21], \"reverse\":false}}",
@@ -11069,8 +11069,8 @@
                 }
             ],
             "success": false,
-            "err_type": "PARA_KEY_ERROR",
-            "err_msg": "missing arg: bank_hours_start"
+            "err_type": "PARA_VALUE_ERROR",
+            "err_msg": "[ideal 0] wrong length of ['Sign up for telephone banking services through the mobile app', 'Specifications: You can sign up for telephone banking services via this app.', 'Upcoming dates: You can sign up for telephone banking services now.', \"Network options: Ensure that the service is available on your provider's network.\", 'Duration: Sign up is optional.', 'Registration: 0 days cancellation costs $10.', 'Contacts: Call us at 404-555-1300 for all information.']."
         },
         "use_stag": {
             "output": "Here are the assigned functions and their parameters to classify the customer queries:\n\n```json\n{\n  \"name\": \"record\",\n  \"parameters\": {\"faq_describe_telephone_banking_start\": [\"How do I sign up for tele-banking services through the mobile app?\", \"Can I sign up for telephone banking services?\", \"Where can I find the application for telephone banking services?\"], \"bank_hours_start\": [\"I'm interested in opening a long term savings account. What options do you have?\", \"Do you offer any special accounts for children or minors?\", \"Do you offer any special accounts for individuals looking to save for a home purchase or renovation?\"], \"faq_describe_accounts_start\": [\"Are any banks open in Sri Lanka right now?\", \"Do you offer any special accounts for children or minors?\", \"Do you offer any special accounts for individuals looking to save for a home purchase or renovation?\"]}\n}\n```[engine info] Got an invalid function call output from model",
@@ -11284,9 +11284,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] wrong length of ['Can I use bonuses or commissions as part of my income for a loan application?', 'Can I schedule automatic withdrawals for different dates?', 'How much do I owe on my home equity loan?', 'Will my income be verified during the loan application process?']."
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {
@@ -11397,9 +11397,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] wrong length of ['Need ATM location'].[ideal 1] wrong length of ['Need ATM location']."
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {
@@ -11684,7 +11684,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc9df4d0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b9604610>"
         },
         "input": [
             {
@@ -15061,12 +15061,12 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: milliseconds, ideal-opt: ['', 'N/A']"
+            "err_msg": "value not match: start https://huggingface.co, ideal-opt: ['start https://hf-mirror.com']"
         },
         "input": [
             {
                 "role": "user",
-                "content": "open huggingface using the start command and through the link: https://huggingface.co"
+                "content": "open huggingface using the start command and through the link: https://hf-mirror.com"
             }
         ],
         "tools": [
@@ -15104,7 +15104,7 @@
                 "name": "cmd_controller.execute",
                 "arguments": {
                     "command": [
-                        "start https://huggingface.co"
+                        "start https://hf-mirror.com"
                     ],
                     "unit": [
                         "",
@@ -20514,9 +20514,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['Quentin Tarantino']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"Movies_3_FindMovies\", \"parameters\":{\"directed_by\": \"dontcare\", \"genre\": \"Drama\", \"cast\": \"dontcare\"}}",
@@ -20532,9 +20532,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['Quentin Tarantino']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {
@@ -20625,9 +20625,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['David Leitch']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"Movies_3_FindMovies\", \"parameters\":{\"directed_by\": \"David Leitch\", \"genre\": \"dontcare\", \"cast\": \"dontcare\"}}",
@@ -20643,9 +20643,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['Lori Pelenise Tuisano']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {
@@ -20848,9 +20848,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['James Corden']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"Movies_3_FindMovies\", \"parameters\":{\"directed_by\": \"dontcare\",\"genre\": \"Comedy\",\"cast\": \"dontcare\"}}",
@@ -20866,9 +20866,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['James Corden']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {
@@ -21179,9 +21179,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['Nitesh Tiwari']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"Movies_3_FindMovies\", \"parameters\":{\"directed_by\":\"Nitesh Tiwari\",\"genre\":\"Comedy\",\"cast\":\"dontcare\"}}",
@@ -21393,9 +21393,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['David Leitch']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"Movies_3_FindMovies\", \"parameters\":{\"directed_by\":\"dontcare\",\"genre\":\"Action\",\"cast\":\"dontcare\"}}",
@@ -21411,9 +21411,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['David Leitch']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {
@@ -21615,9 +21615,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: ACTION, ideal-opt: ['', 'dontcare']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"Movies_3_FindMovies\", \"parameters\":{\"directed_by\": \"dontcare\", \"genre\": \"Comedy\", \"cast\": \"dontcare\"}}",
@@ -21633,9 +21633,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['Paul Downs Colaizzo']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {
@@ -21726,9 +21726,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['Simon Curtis']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"Movies_3_FindMovies\", \"parameters\":{\"directed_by\":\"dontcare\",\"genre\":\"Drama\",\"cast\":\"dontcare\"}}",
@@ -21744,9 +21744,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['Simon Curtis']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {
@@ -21946,9 +21946,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: Fantasy, ideal-opt: ['', 'dontcare']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"Movies_3_FindMovies\", \"parameters\":{\"directed_by\": \"dontcare\", \"genre\": \"dontcare\", \"cast\": \"dontcare\"}}",
@@ -21964,9 +21964,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['James Gray']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {
@@ -22059,9 +22059,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['Thurop Van Orman']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"Movies_3_FindMovies\", \"parameters\":{\"directed_by\":\"dontcare\",\"genre\":\"Fantasy\",\"cast\":\"donotcare \u064a\u062a\u0645\u0646\u0649\u064b \u0623\u0646 \u062a\u062c\u062f \u0645\u0633\u0644\u0633\u0644\u064b\u0627 \u0631\u0627\u0626\u0639\u064b\u0627 \u0628\u0627\u062f\u0631 \u0643\u0627\u0632\u0631\u064a\u0645 \u0643dresser \u0643\u0644\u0647\u0627 \u0627\u0644\u0643\u0627\u062a\u0628\u0627\u062a \u0648\u0627\u0644\u9ca9 \u0627\u0644\u0633\u064a\u0627\u0633\u0627\u0621 \u0648\u0643\u0644\u0627 \u0627\u0644\u0644\u0627\u0639\u0628\u064a\u0646 \u0627\u0644\u0623\u0643\u0628\u0631 \u0641\u064a \u0627\u0644\u0648\u0627\u0642\u0639. \u0647\u0644 \u0647\u0646\u0627\u0643 \u0645\u0633\u0644\u0633\u0644\u064b\u0627 \u062a\u062a\u0645\u0646\u0649\u064b \u0623\u0646 \u064a\u062a\u0645 \u0627\u0644\u062a\u0631\u0648\u064a\u062c \u0639\u0644\u064a\u0647\u061f\"}}",
@@ -22077,9 +22077,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['Thurop Van Orman']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {
@@ -22398,9 +22398,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: , ideal-opt: ['Kirill Mikhanovsky']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {

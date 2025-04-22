@@ -6976,8 +6976,8 @@
                 }
             ],
             "success": false,
-            "err_type": "PARA_KEY_ERROR",
-            "err_msg": "missing arg: sides_per_die"
+            "err_type": "PARA_VALUE_ERROR",
+            "err_msg": "value not match: 1, ideal-opt: [2]"
         },
         "use_stag": {
             "output": "{\"name\": \"dice_roll_probability\", \"parameters\":{\"desired_sum\": 7, \"n_rolls\": 1, \"sides_per_die\": 2}}",
@@ -20771,7 +20771,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cd644210>[ideal 1] <__main__.Error object at 0x7f39cd645e50>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b8dce9d0>[ideal 1] <__main__.Error object at 0x7495b8dcec50>"
         },
         "use_stag": {
             "output": "{\"name\": \"map_service.get_directions\", \"parameters\":{\"start\": \"New York\", \"end\": \"Los Angeles\", \"avoid\": [\"highways\", \"tolls\"]}}",

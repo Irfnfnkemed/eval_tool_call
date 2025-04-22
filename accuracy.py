@@ -74,9 +74,10 @@ def _parse_mlc_engine_config(config_str: Optional[str]) -> EngineConfig:
         prefix_cache_mode=engine_config_override.prefix_cache_mode,
     )
 
+
 def convert_calls_to_json(stringified_calls: str) -> List[Dict[str, Any]]:
     """Convert the list of ChatToolCall to a list of dict."""
-    
+
     function_calls_json = []
     start = 0
     while True:
@@ -90,15 +91,17 @@ def convert_calls_to_json(stringified_calls: str) -> List[Dict[str, Any]]:
             start = index + 1
             continue
         start = end_index
-        if not isinstance(result, dict) or "name" not in result or "parameters" not in result:
+        if (
+            not isinstance(result, dict)
+            or "name" not in result
+            or "parameters" not in result
+        ):
             continue
-        function_calls_json.append({
-                                    "function": {
-                                        "name": result["name"], 
-                                        "arguments": result["parameters"]}
-                                    }
-                                    )
+        function_calls_json.append(
+            {"function": {"name": result["name"], "arguments": result["parameters"]}}
+        )
     return function_calls_json
+
 
 def _launch_mlc_server(args: argparse.argparse.Namespace):
     return mlc_llm.serve.PopenServer(
@@ -129,7 +132,9 @@ def run_pipeline(
     )
     request_records = pipeline(request_records)
     num_total_requests = (
-        args.num_requests if not args.per_gpu_workload else args.num_requests * args.num_gpus
+        args.num_requests
+        if not args.per_gpu_workload
+        else args.num_requests * args.num_gpus
     )
     assert len(request_records) == num_total_requests
     sorted_requests: List[RequestRecord] = [None] * num_total_requests
@@ -139,14 +144,18 @@ def run_pipeline(
         sorted_requests[request_record.request_id] = request_record
 
     request_records = MetricAnalyzer(tokenizer)(request_records)
-    report = generate_metrics_summary(request_records, num_total_requests, args.num_gpus)
+    report = generate_metrics_summary(
+        request_records, num_total_requests, args.num_gpus
+    )
     return report, sorted_requests
 
 
 def query_mlc_server_metrics(host: str, port: int):
     """Try to get the MLC server metrics whenever it exists."""
     try:
-        r = requests.post(f"http://{host}:{port}/debug/dump_engine_metrics", json={}, timeout=10)
+        r = requests.post(
+            f"http://{host}:{port}/debug/dump_engine_metrics", json={}, timeout=10
+        )
         if r.status_code == 200:
             print(f"MLC server metrics: {r.json()}")
     except Exception:  # pylint: disable=broad-exception-caught
@@ -429,10 +438,3 @@ if __name__ == "__main__":
     )
 
     main(parser.parse_args())
-
-
-
-
-
-
-

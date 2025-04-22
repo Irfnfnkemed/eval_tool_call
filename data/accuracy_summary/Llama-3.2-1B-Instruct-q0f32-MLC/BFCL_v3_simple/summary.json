@@ -2456,8 +2456,8 @@
                 }
             ],
             "success": false,
-            "err_type": "PARA_KEY_ERROR",
-            "err_msg": "missing arg: time"
+            "err_type": "TYPE_ERROR",
+            "err_msg": "wrong type 10: not int"
         },
         "use_stag": {
             "output": "{\"name\": \"calculate_displacement\", \"parameters\":{\"initial_velocity\":10,\"time\":5,\"acceleration\":9.8}}",
@@ -6577,7 +6577,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cda4d990>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b95a10d0>"
         },
         "input": [
             {
@@ -7611,7 +7611,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cda4c410>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b95a0fd0>"
         },
         "input": [
             {
@@ -9853,8 +9853,8 @@
                 }
             ],
             "success": false,
-            "err_type": "PARA_KEY_ERROR",
-            "err_msg": "missing arg: max_depth"
+            "err_type": "PARA_VALUE_ERROR",
+            "err_msg": "value not match: processed_data, ideal-opt: ['your_dataset_name']"
         },
         "use_stag": {
             "output": "{\"name\": \"train_random_forest_classifier\", \"parameters\":{\"dataset\": \"my_dataset_name\", \"max_depth\": 5, \"n_estimators\": 100}}",
@@ -14638,8 +14638,8 @@
                 }
             ],
             "success": false,
-            "err_type": "PARA_KEY_ERROR",
-            "err_msg": "missing arg: interest_rate"
+            "err_type": "TYPE_ERROR",
+            "err_msg": "wrong type 1000: not int"
         },
         "use_stag": {
             "output": "{\"name\": \"calculate_future_value\", \"parameters\":{\"initial_investment\":950,\"interest_rate\":0.05,\"duration\":2,\"compounded\":1}}",
@@ -16922,8 +16922,8 @@
                 }
             ],
             "success": false,
-            "err_type": "PARA_KEY_ERROR",
-            "err_msg": "missing arg: location"
+            "err_type": "TYPE_ERROR",
+            "err_msg": "wrong type 2020: not int"
         },
         "use_stag": {
             "output": "{\"name\": \"lawsuits_search\", \"parameters\":{\"company_name\": \"Google\", \"location\": \"California\", \"year\": 2020,\"case_type\": \"all\"}}",
@@ -18047,7 +18047,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cda4d990>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b95a11d0>"
         },
         "input": [
             {

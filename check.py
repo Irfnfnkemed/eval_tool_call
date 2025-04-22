@@ -17,9 +17,12 @@ SUPPORTED_DATASET = [
 ]
 
 SUPPORTED_MODEL = [
+    "Llama-3.2-1B-Instruct-q0f32-MLC",
     "Llama-3.2-1B-Instruct-q0f16-MLC",
+    "Llama-3.2-3B-Instruct-q0f32-MLC",
     "Llama-3.2-3B-Instruct-q0f16-MLC",
     "Llama-3-8B-Instruct-q0f16-MLC",
+    "Llama-3.1-8B-Instruct-q0f16-MLC",
     "Qwen2.5-0.5B-Instruct-q0f32-MLC",
     "Qwen2.5-3B-Instruct-q0f16-MLC",
     "Hermes-3-Llama-3.2-3B-q0f16-MLC",
@@ -97,40 +100,46 @@ def check_simple(
         return False, Error("wrong function name.", Err_type.FUNC_NAME_ERROR)
     func = tool["function"]
     # check func args
+    if not isinstance(tool_call["function"]["arguments"], dict):
+        return False, Error("wrong format", Err_type.PARA_KEY_ERROR)
+
     for arg in func["parameters"]["required"]:
         if arg not in tool_call["function"]["arguments"]:
             return False, Error(f"missing arg: {arg}", Err_type.PARA_KEY_ERROR)
-    for arg in tool_call["function"]["arguments"].keys():
-        ideal_arg: List = ideal["arguments"][arg] if arg in ideal["arguments"] else None
-        real_arg = tool_call["function"]["arguments"][arg]
-        if arg not in func["parameters"]["properties"]:
-            return False, Error(f"unknown arg: {arg}", Err_type.PARA_KEY_ERROR)
-        info_arg = func["parameters"]["properties"][arg]
-        if info_arg["type"] == "integer":
-            acc, err = check_integer(gorilla, real_arg, ideal_arg)
-            if not acc:
-                return False, err
-        elif info_arg["type"] == "number":
-            acc, err = check_number(gorilla, real_arg, ideal_arg)
-            if not acc:
-                return False, err
-        elif info_arg["type"] == "boolean":
-            acc, err = check_boolean(gorilla, real_arg, ideal_arg)
-            if not acc:
-                return False, err
-        elif info_arg["type"] == "string":
-            enum = info_arg["enum"] if "enum" in info_arg else None
-            acc, err = check_string(gorilla, real_arg, ideal_arg, enum)
-            if not acc:
-                return False, err
-        elif info_arg["type"] == "array":
-            acc, err = check_list(gorilla, real_arg, ideal_arg, info_arg["items"])
-            if not acc:
-                return False, err
-        elif info_arg["type"] == "dict":
-            acc, err = check_dict(real_arg, ideal_arg, info_arg["properties"])
-            if not acc:
-                return False, err
+
+        for arg in tool_call["function"]["arguments"].keys():
+            ideal_arg: List = (
+                ideal["arguments"][arg] if arg in ideal["arguments"] else None
+            )
+            real_arg = tool_call["function"]["arguments"][arg]
+            if arg not in func["parameters"]["properties"]:
+                return False, Error(f"unknown arg: {arg}", Err_type.PARA_KEY_ERROR)
+            info_arg = func["parameters"]["properties"][arg]
+            if info_arg["type"] == "integer":
+                acc, err = check_integer(gorilla, real_arg, ideal_arg)
+                if not acc:
+                    return False, err
+            elif info_arg["type"] == "number":
+                acc, err = check_number(gorilla, real_arg, ideal_arg)
+                if not acc:
+                    return False, err
+            elif info_arg["type"] == "boolean":
+                acc, err = check_boolean(gorilla, real_arg, ideal_arg)
+                if not acc:
+                    return False, err
+            elif info_arg["type"] == "string":
+                enum = info_arg["enum"] if "enum" in info_arg else None
+                acc, err = check_string(gorilla, real_arg, ideal_arg, enum)
+                if not acc:
+                    return False, err
+            elif info_arg["type"] == "array":
+                acc, err = check_list(gorilla, real_arg, ideal_arg, info_arg["items"])
+                if not acc:
+                    return False, err
+            elif info_arg["type"] == "dict":
+                acc, err = check_dict(real_arg, ideal_arg, info_arg["properties"])
+                if not acc:
+                    return False, err
     return True, Error()
 
 
@@ -142,6 +151,8 @@ def check_simple_schema(
     if func["name"] != tool_call["function"]["name"]:
         return False, Error("wrong function name.", Err_type.FUNC_NAME_ERROR)
     # check func args
+    if not isinstance(tool_call["function"]["arguments"], dict):
+        return False, Error("wrong format", Err_type.PARA_KEY_ERROR)
     for arg in func["parameters"]["required"]:
         if arg not in tool_call["function"]["arguments"]:
             return False, Error(f"missing arg: {arg}", Err_type.PARA_KEY_ERROR)

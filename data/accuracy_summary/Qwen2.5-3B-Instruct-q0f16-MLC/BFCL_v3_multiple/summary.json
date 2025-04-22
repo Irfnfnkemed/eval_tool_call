@@ -12589,7 +12589,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cd0b07d0>[ideal 1] <__main__.Error object at 0x7f39cd0b05d0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b8877450>[ideal 1] <__main__.Error object at 0x7495b8875410>"
         },
         "use_stag": {
             "output": "{\"name\": \"walmart.vegan_products\", \"parameters\":{\"location\": \"Denver, CO\", \"categories\": [\"vegan\", \"gluten-free\"]}}",

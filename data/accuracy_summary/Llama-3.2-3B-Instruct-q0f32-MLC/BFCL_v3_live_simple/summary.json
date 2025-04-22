@@ -2511,7 +2511,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc948150>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b92fa550>"
         },
         "input": [
             {
@@ -6993,8 +6993,8 @@
                 }
             ],
             "success": false,
-            "err_type": "PARA_KEY_ERROR",
-            "err_msg": "missing arg: producto"
+            "err_type": "TYPE_ERROR",
+            "err_msg": "wrong type 1000000: not number"
         },
         "use_stag": {
             "output": "{\"name\": \"obtener_cotizacion_de_creditos\", \"parameters\":{\"monto_del_credito\": 1000000, \"plazo_del_credito_mensual\": 12, \"tasa_interes_minima\": 5.0, \"producto\": \"auto\", \"a\u00f1o_vehiculo\": 2024, \"enganche\": 0.2}}",
@@ -11101,7 +11101,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc948210>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b92fba10>"
         },
         "input": [
             {
@@ -11349,9 +11349,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "TYPE_ERROR",
-            "err_msg": "wrong type of [\"Can I schedule automatic withdrawals for different dates?\"]: not list."
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"record\", \"parameters\":{\"faq_auto_withdraw_start\": [\"Can I schedule automatic withdrawals for different dates?\"], \"payment_information_start\": [\"How much do I owe on my home equity loan?\"], \"pma_income_requirements_start\": [\"Can I use bonuses or commissions as part of my income for a loan application?\"], \"outofscope\": [\"Will my income be verified during the loan application process?\", \"Is there a minimum income threshold for loan approval?\" ]}}",
@@ -11377,9 +11377,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] wrong length of ['Can I use bonuses or commissions as part of my income for a loan application?']."
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {
@@ -11478,9 +11478,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "TYPE_ERROR",
-            "err_msg": "wrong type of [\"Need ATM location\"]: not list."
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"record\", \"parameters\":{\"atm_finder_start\": [\"Need ATM location\"]}}",
@@ -11634,9 +11634,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc948190>"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"record\", \"parameters\":{\"acc_routing_start\": [\"What is my balance?\", \"Tell me my available balance, please\", \"What is my current available balance?\", \"Please provide my current account balance\"]}}",
@@ -11655,9 +11655,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] wrong length of ['What is my balance?', 'Tell me my available balance, please', 'What is my current available balance?', 'Please provide my current account balance'].[ideal 1] wrong length of ['What is my balance?', 'Tell me my available balance, please', 'What is my current available balance?', 'Please provide my current account balance']."
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "input": [
             {
@@ -11825,7 +11825,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc9482d0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b92f94d0>"
         },
         "input": [
             {
@@ -15226,7 +15226,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: start huggingface, ideal-opt: ['start https://huggingface.co']"
+            "err_msg": "value not match: start huggingface, ideal-opt: ['start https://hf-mirror.com']"
         },
         "use_stag": {
             "output": "{\"name\": \"cmd_controller.execute\", \"parameters\":{\"command\": \"start huggingface.com\", \"unit\": \"seconds\"}}",
@@ -15243,12 +15243,12 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: start huggingface.com, ideal-opt: ['start https://huggingface.co']"
+            "err_msg": "value not match: start huggingface.com, ideal-opt: ['start https://hf-mirror.com']"
         },
         "input": [
             {
                 "role": "user",
-                "content": "open huggingface using the start command and through the link: https://huggingface.co"
+                "content": "open huggingface using the start command and through the link: https://hf-mirror.com"
             }
         ],
         "tools": [
@@ -15286,7 +15286,7 @@
                 "name": "cmd_controller.execute",
                 "arguments": {
                     "command": [
-                        "start https://huggingface.co"
+                        "start https://hf-mirror.com"
                     ],
                     "unit": [
                         "",
@@ -21212,9 +21212,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: Comic, ideal-opt: ['Comedy']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"Movies_3_FindMovies\", \"parameters\":{\"genre\":\"Comedy\",\"cast\":\"James Corden\"}}",
@@ -21542,9 +21542,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: Comic, ideal-opt: ['Comedy', 'Comedy-drama']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"Movies_3_FindMovies\", \"parameters\":{\"directed_by\": \"Nitesh Tiwari\", \"genre\": \"Comedy\", \"cast\": \"dontcare\"}}",
@@ -22092,9 +22092,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: dontcare, ideal-opt: ['McKinley Belcher III']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"Movies_3_FindMovies\", \"parameters\":{\"directed_by\": \"Simon Curtis\",\"genre\": \"Drama\"}}",
@@ -22528,9 +22528,9 @@
                     }
                 }
             ],
-            "success": false,
-            "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "value not match: Imaginative fiction, ideal-opt: ['Fantasy']"
+            "success": true,
+            "err_type": null,
+            "err_msg": null
         },
         "use_stag": {
             "output": "{\"name\": \"Movies_3_FindMovies\", \"parameters\":{\"genre\": \"Fantasy\", \"cast\": \"dontcare\"}}",

@@ -7640,7 +7640,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cdcb22d0>[ideal 1] <__main__.Error object at 0x7f39cd8145d0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b98992d0>[ideal 1] <__main__.Error object at 0x7495b90fab50>"
         },
         "use_stag": {
             "output": "{\"name\": \"whole_foods.order\", \"parameters\":{\"location\":\"downtown\",\"items\":[\"large pepperoni pizza\",\"chicken caesar salad\"],\"size\":\"large\"}}},{\"name\": \"whole_foods.order\", \"parameters\":{\"location\":\"uptown\",\"items\":[\"large pepperoni pizza\",\"chicken caesar salad\"],\"size\":\"large\"}}}",
@@ -7674,7 +7674,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cd815010>[ideal 1] <__main__.Error object at 0x7f39cd815810>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b9899310>[ideal 1] <__main__.Error object at 0x7495b90fad50>"
         },
         "input": [
             {

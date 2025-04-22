@@ -17997,7 +17997,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc9d12d0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b90fa090>"
         },
         "use_stag": {
             "output": "{\"name\": \"calculate_slope_gradient\", \"parameters\":{\"point1\": [40.7128, -74.006], \"point2\": [34.0522, -118.2437], \"unit\": \"degree\"}}",
@@ -19497,7 +19497,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc9d12d0>[ideal 1] <__main__.Error object at 0x7f39cc789d50>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b90fa990>[ideal 1] <__main__.Error object at 0x7495b90fa090>"
         },
         "use_stag": {
             "output": "{\"name\": \"map_service.get_directions\", \"parameters\":{\"start\": \"New York\", \"end\": \"Los Angeles\", \"avoid\":[\"highways\", \"ferries\"]}}",
@@ -19518,7 +19518,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc9d0cd0>[ideal 1] <__main__.Error object at 0x7f39cc789d50>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b90fad50>[ideal 1] <__main__.Error object at 0x7495b90f9fd0>"
         },
         "input": [
             {
@@ -30804,7 +30804,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc789ed0>[ideal 1] <__main__.Error object at 0x7f39cc789990>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b90fa210>[ideal 1] <__main__.Error object at 0x7495b90fa910>"
         },
         "input": [
             {
@@ -31373,7 +31373,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc9d12d0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b90f8690>"
         },
         "use_stag": {
             "output": "{\"name\": \"blackjack.check_winner\", \"parameters\":{\"player_cards\": [\"A\", \"A\", \"A\"], \"dealer_cards\": [\"9\", \"9\", \"9\"], \"ace_value\": 1}}",
@@ -34887,7 +34887,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc789110>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b90f87d0>"
         },
         "use_stag": {
             "output": "{\"name\": \"safeway.order\", \"parameters\":{\"location\": \"Palo Alto\", \"items\": [\"bottles of olive oil\", \"bag of rice\"], \"quantity\": [3, 5]}}",
@@ -34911,7 +34911,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc9d0cd0>[ideal 1] <__main__.Error object at 0x7f39cc789990>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b90f9c10>[ideal 1] <__main__.Error object at 0x7495b90fa090>"
         },
         "input": [
             {
@@ -35198,7 +35198,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc9d0cd0>[ideal 1] <__main__.Error object at 0x7f39cc9d0cd0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b90f9fd0>[ideal 1] <__main__.Error object at 0x7495b90f8690>"
         },
         "use_stag": {
             "output": " seaside\nfind the nearest stores, which will help you monitor the availability of the products mentioned.\n[for i in range(3): loc = distrac of store listing if \"SJ\" in loc] Available scores of apples at this store:[33] Available packs of rice at this store:[29]boolory of bottled water at this store:[22][engine info] Got an invalid function call output from model",
@@ -35428,7 +35428,7 @@
             ],
             "success": false,
             "err_type": "PARA_VALUE_ERROR",
-            "err_msg": "[ideal 0] <__main__.Error object at 0x7f39cc9d0cd0>[ideal 1] <__main__.Error object at 0x7f39cc9d0cd0>"
+            "err_msg": "[ideal 0] <__main__.Error object at 0x7495b90f9c10>[ideal 1] <__main__.Error object at 0x7495b90f9fd0>"
         },
         "input": [
             {
