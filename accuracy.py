@@ -75,31 +75,53 @@ def _parse_mlc_engine_config(config_str: Optional[str]) -> EngineConfig:
     )
 
 
-def convert_calls_to_json(stringified_calls: str) -> List[Dict[str, Any]]:
+def convert_calls_to_json(stringified_calls: str, model: str) -> List[Dict[str, Any]]:
     """Convert the list of ChatToolCall to a list of dict."""
-
     function_calls_json = []
-    start = 0
-    while True:
-        index = stringified_calls.find('{"name":', start)
-        if index == -1:
-            break
-        try:
-            decoder = json.JSONDecoder()
-            result, end_index = decoder.raw_decode(stringified_calls, index)
-        except:  # pylint: disable=bare-except
-            start = index + 1
-            continue
-        start = end_index
-        if (
-            not isinstance(result, dict)
-            or "name" not in result
-            or "parameters" not in result
-        ):
-            continue
-        function_calls_json.append(
-            {"function": {"name": result["name"], "arguments": result["parameters"]}}
-        )
+    if "Llama-3" in model:
+        start = 0
+        while True:
+            index = stringified_calls.find('{"name":', start)
+            if index == -1:
+                break
+            try:
+                decoder = json.JSONDecoder()
+                result, end_index = decoder.raw_decode(stringified_calls, index)
+            except:  # pylint: disable=bare-except
+                start = index + 1
+                continue
+            start = end_index
+            if (
+                not isinstance(result, dict)
+                or "name" not in result
+                or "parameters" not in result
+            ):
+                continue
+            function_calls_json.append(
+                {"function": {"name": result["name"], "arguments": result["parameters"]}}
+            )
+    elif "Qwen2" in model:
+        start = 0
+        while True:
+            index = stringified_calls.find('<tool_call>\n{"name":', start)
+            if index == -1:
+                break
+            try:
+                decoder = json.JSONDecoder()
+                result, end_index = decoder.raw_decode(stringified_calls, index + len("<tool_call>\n"))
+            except:  # pylint: disable=bare-except
+                start = index + 1
+                continue
+            start = end_index
+            if (
+                not isinstance(result, dict)
+                or "name" not in result
+                or "arguments" not in result
+            ):
+                continue
+            function_calls_json.append(
+                {"function": {"name": result["name"], "arguments": result["arguments"]}}
+            )
     return function_calls_json
 
 
@@ -185,7 +207,7 @@ def main(args: argparse.argparse.Namespace):
             for request in request_records:
                 store_record.append({"id": request.request_id})
                 store_record[-1]["output"] = request.output_str
-                store_record[-1]["call"] = convert_calls_to_json(request.output_str)
+                store_record[-1]["call"] = convert_calls_to_json(request.output_str, args.model)
             with open(f"{output_dir}/result.json", "w") as f:
                 json.dump(store_record, f, indent=4)
 

@@ -10,7 +10,8 @@ models = [
     "Llama-3.2-1B-Instruct-q0f16-MLC",
     "Llama-3.2-3B-Instruct-q0f16-MLC",
     "Llama-3.1-8B-Instruct-q0f16-MLC",
-    "Qwen2.5-0.5B-Instruct-q0f32-MLC",
+    "Llama-3.1-70B-Instruct-q0f16-MLC",
+    "Qwen2.5-72B-Instruct-q0f16-MLC",
 ]
 datasets = [
     "BFCL_v3_parallel",
@@ -22,7 +23,7 @@ def draw(args: argparse.ArgumentParser, summary: Dict):
     colors = ["#0056b3", "#FF8C00"]
 
     # First figure - Accuracy
-    fig, axes = plt.subplots(1, 2, figsize=(16, 6))  # Slightly wider figure
+    fig, axes = plt.subplots(1, 2, figsize=(20, 6))  # Slightly wider figure
     bars = ["no_stag", "use_stag"]
     width = 0.35
     gap = 0.03
@@ -37,13 +38,15 @@ def draw(args: argparse.ArgumentParser, summary: Dict):
             values = [draw_info[model][bar]["CORRECT_CALL"] * 100 for model in models]
             ax.bar(x + i * (width + gap), values, width, color=colors[i], label=bar)
         ax.set_title(dataset.replace("_", "-"), fontsize=25, pad=20)  # Added pad
-        ax.set_ylim(0, 70)
+        ax.set_ylim(0, 105)
         ax.set_xticks(x + width / 2)
         ax.set_ylabel("Output Accuracy (%)", fontsize=18)
         ax.axhline(y=20, color="gray", linestyle="--", linewidth=1)
         ax.axhline(y=40, color="gray", linestyle="--", linewidth=1)
         ax.axhline(y=60, color="gray", linestyle="--", linewidth=1)
-        ax.set_yticks(np.arange(0, 71, 20))
+        ax.axhline(y=80, color="gray", linestyle="--", linewidth=1)
+        ax.axhline(y=100, color="gray", linestyle="--", linewidth=2)
+        ax.set_yticks(np.arange(0, 105, 20))
         ax.tick_params(axis="y", labelsize=16)
         ax.set_xticklabels(
             [
@@ -77,7 +80,7 @@ def draw(args: argparse.ArgumentParser, summary: Dict):
     )
 
     # Second figure - Correct schema rate
-    fig, axes = plt.subplots(1, 2, figsize=(16, 6))  # Slightly wider figure
+    fig, axes = plt.subplots(1, 2, figsize=(20, 6))  # Slightly wider figure
 
     for ax_idx, ax in enumerate(axes.flat):
         dataset = datasets[ax_idx]

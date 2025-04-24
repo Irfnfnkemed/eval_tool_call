@@ -11,8 +11,9 @@ models = [
         "Llama-3.2-1B-Instruct-q0f16-MLC",
         "Llama-3.2-3B-Instruct-q0f16-MLC",
         "Llama-3.1-8B-Instruct-q0f16-MLC",
+        "Llama-3.1-70B-Instruct-q0f16-MLC",
     ],
-    ["Llama-3.2-1B-Instruct", "Llama-3.2-3B-Instruct", "Llama-3.1-8B-Instruct"],
+    ["Llama-3.2-1B-Instruct", "Llama-3.2-3B-Instruct", "Llama-3.1-8B-Instruct", "Llama-3.1-70B-Instruct"],
 ]
 dataset = "BFCL_v3_multiple"
 query_to_title = {
@@ -28,8 +29,8 @@ def draw(args, mlc: Dict, sglang: Dict, query: str):
     summary = [mlc, sglang]
 
     # First figure - MLCLLM
-    fig, axes = plt.subplots(1, 2, figsize=(16, 6))  # Slightly wider figure
-    bars = ["no_stag", "use_stag_jf"]
+    fig, axes = plt.subplots(1, 2, figsize=(18, 6))  # Slightly wider figure
+    bars = ["no_stag", "use_stag"]
     width = 0.35
     gap = 0.03
     x = np.arange(len(models[0]))
@@ -45,6 +46,12 @@ def draw(args, mlc: Dict, sglang: Dict, query: str):
         ax.set_xticks(x + width / 2)
         ax.set_ylabel(query_to_title[query], fontsize=18)
         ax.tick_params(axis="y", labelsize=16)
+        ax.set_ylim(0, 0.9)
+        ax.axhline(y=0.2, color="gray", linestyle="--", linewidth=1)
+        ax.axhline(y=0.4, color="gray", linestyle="--", linewidth=1)
+        ax.axhline(y=0.6, color="gray", linestyle="--", linewidth=1)
+        ax.axhline(y=0.8, color="gray", linestyle="--", linewidth=1)
+        ax.set_yticks(np.arange(0, 0.9, 0.2))
         ax.set_xticklabels(
             [
                 model.rstrip("-Instruct-q0f16-MLC").rstrip("-Instruct-q0f32-MLC")
@@ -89,6 +96,7 @@ if __name__ == "__main__":
         f"{args.bench_root}/sglang/bench.json", mode="r", encoding="utf-8"
     ) as file:
         sglang = json.load(file)
-    draw(args, mlc, sglang, "output_tokens.mean")
+    # draw(args, mlc, sglang, "output_tokens.mean")
     # draw(args, mlc, sglang, "time_per_output_token_s.mean")
     # draw(args, mlc, sglang, "time_to_first_token_s.mean")
+    draw(args, mlc, sglang, "end_to_end_latency_s.mean")

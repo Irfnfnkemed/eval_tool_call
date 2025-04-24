@@ -17,16 +17,11 @@ SUPPORTED_DATASET = [
 ]
 
 SUPPORTED_MODEL = [
-    "Llama-3.1-70B-Instruct-q0f16-MLC",
-    "Llama-3.2-1B-Instruct-q0f32-MLC",
     "Llama-3.2-1B-Instruct-q0f16-MLC",
-    "Llama-3.2-3B-Instruct-q0f32-MLC",
     "Llama-3.2-3B-Instruct-q0f16-MLC",
-    "Llama-3-8B-Instruct-q0f16-MLC",
     "Llama-3.1-8B-Instruct-q0f16-MLC",
-    "Qwen2.5-0.5B-Instruct-q0f32-MLC",
-    "Qwen2.5-3B-Instruct-q0f16-MLC",
-    "Hermes-3-Llama-3.2-3B-q0f16-MLC",
+    "Llama-3.1-70B-Instruct-q0f16-MLC",
+    "Qwen2.5-72B-Instruct-q0f16-MLC",
     "ALL",
 ]
 
@@ -613,7 +608,10 @@ def check_acc(
                 summary[id][stag_cate]["err_msg"] = "missing calling."
                 err_types[Err_type.CALL_NUMBER_ERROR] += 1
                 continue
-            if len(item[stag_cate]["call"]) != len(info["ideal_call"][0]):
+            if len(item[stag_cate]["call"]) != len(info["ideal_call"]):
+                # print("__________________________________")
+                # print(item[stag_cate]["call"])
+                # print(info["ideal_call"][0])
                 acc, err = (
                     False,
                     Error("wrong calling numbers.", Err_type.CALL_NUMBER_ERROR),
@@ -690,12 +688,20 @@ def get_correct_schema_rate(
                 start = index + 1
                 continue
             start = end_index + 1
-            if "name" not in result or "parameters" not in result:
-                continue
-            call_number += 1
-            call = {
-                "function": {"name": result["name"], "arguments": result["parameters"]}
-            }
+            if "Llama-3" in model:
+                if "name" not in result or "parameters" not in result:
+                    continue
+                call_number += 1
+                call = {
+                    "function": {"name": result["name"], "arguments": result["parameters"]}
+                }
+            elif "Qwen2" in model:
+                if "name" not in result or "arguments" not in result:
+                    continue
+                call_number += 1
+                call = {
+                    "function": {"name": result["name"], "arguments": result["arguments"]}
+                }
             err_list = []
             for tool in entry["tools"]:
                 acc, err = check_simple_schema(gorilla, call, tool)

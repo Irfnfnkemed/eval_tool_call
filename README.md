@@ -19,6 +19,7 @@ python accuracy.py --model Llama-3.1-8B-Instruct-q0f16-MLC \
 --num-requests 400 --num-warmup-requests 1 --request-rate inf \
 --host 127.0.0.1 --port 8000 \
 --api-endpoint mlc --output ./data/accuracy_raw \
+--temperature 0.001 --top-p 0.9 \
 [--use-stag]
 ```
 
@@ -50,7 +51,8 @@ mlc_llm serve HF://mlc-ai/Llama-3.1-8B-Instruct-q0f16-MLC --mode server \
 --host 127.0.0.1 --port 8000 --enable-debug --prefix-cache-mode disable
 
 python -m sglang.launch_server --model-path meta-llama/Meta-Llama-3.1-8B-Instruct \
---host 127.0.0.1 --port 30000 --disable-radix-cache
+--host 127.0.0.1 --port 30000 --disable-radix-cache  --dtype float16 \
+--enable-torch-compile 
 ```
 
 Than generate the raw data (w/ & w/o structural tag, mlc/sglang backend):
@@ -61,7 +63,8 @@ python efficiency.py --model Llama-3.1-8B-Instruct-q0f16-MLC \
 --dataset BFCL_v3_multiple --dataset-path ./data/dataset --num-gpus 1 \
 --num-warmup-requests 200 --num-requests 200 \
 --host 127.0.0.1 --port 8000 --num-concurrent-requests 1 \
---api-endpoint [mlc|sglang] --output ./data/efficiecy  \
+--api-endpoint [mlc|sglang] --output ./data/efficiecy \
+--temperature 0.001 --top-p 0.9 \
 --stream [--use-stag]
 ```
 

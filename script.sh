@@ -1,8 +1,8 @@
 export SERVER_ADDR="127.0.0.1"
 export SERVER_PORT="8000"
-export MODEL="Llama-3.1-8B-Instruct-q0f16-MLC"
-export TOKENIZER=~/.cache/mlc_llm/model_weights/hf/mlc-ai/Llama-3.1-8B-Instruct-q0f16-MLC
-export N_GPU=1
+export MODEL="Qwen2.5-72B-Instruct-q0f16-MLC"
+export TOKENIZER=../Qwen2.5-72B-Instruct-q0f16-MLC
+export N_GPU=4
 export ACC_RAW="./data/ACC_F"
 export ACC_SUM="./data/ACC_SUM_F"
 export EFF="./data/EFF_F"

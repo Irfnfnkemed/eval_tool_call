@@ -223,30 +223,56 @@ class GorillaDataset(Dataset):  # pylint: disable=too-few-public-methods
             else:
                 output_length = 1024
             if self.use_stag:
-                response_format = {
-                    "type": "structural_tag",
-                    "tags": [
-                        {
-                            "begin": '{{"name": "{func_name}", "parameters":'.format(
-                                func_name=tool["function"]["name"]
-                            ),
-                            "schema": json.dumps(
-                                {
-                                    "properties": tool["function"]["parameters"][
-                                        "properties"
-                                    ],
-                                    "required": tool["function"]["parameters"][
-                                        "required"
-                                    ],
-                                    "type": tool["function"]["parameters"]["type"],
-                                }
-                            ),
-                            "end": "}",
-                        }
-                        for tool in entry["tool"]
-                    ],
-                    "triggers": ['{"name":'],
-                }
+                if "Llama-3" in self.model:
+                    response_format = {
+                        "type": "structural_tag",
+                        "tags": [
+                            {
+                                "begin": '{{"name": "{func_name}", "parameters":'.format(
+                                    func_name=tool["function"]["name"]
+                                ),
+                                "schema": json.dumps(
+                                    {
+                                        "properties": tool["function"]["parameters"][
+                                            "properties"
+                                        ],
+                                        "required": tool["function"]["parameters"][
+                                            "required"
+                                        ],
+                                        "type": tool["function"]["parameters"]["type"],
+                                    }
+                                ),
+                                "end": "}",
+                            }
+                            for tool in entry["tool"]
+                        ],
+                        "triggers": ['{"name":'],
+                    }
+                else:
+                    response_format = {
+                        "type": "structural_tag",
+                        "tags": [
+                            {
+                                "begin": '<tool_call>\n{{"name": "{func_name}", "arguments":'.format(
+                                    func_name=tool["function"]["name"]
+                                ),
+                                "schema": json.dumps(
+                                    {
+                                        "properties": tool["function"]["parameters"][
+                                            "properties"
+                                        ],
+                                        "required": tool["function"]["parameters"][
+                                            "required"
+                                        ],
+                                        "type": tool["function"]["parameters"]["type"],
+                                    }
+                                ),
+                                "end": "}\n</tool_call>",
+                            }
+                            for tool in entry["tool"]
+                        ],
+                        "triggers": ['<tool_call>'],
+                    }
             else:
                 response_format = {
                     "type": "text",
@@ -268,6 +294,33 @@ class GorillaDataset(Dataset):  # pylint: disable=too-few-public-methods
                 ]
                 for tool in entry['tool']:
                     messages[1].content += f"{json.dumps(tool)}\n\n"
+                for message in entry["question"]:
+                    if message["role"] == "system":
+                        messages[0].content += message["content"]
+                    else:
+                        messages[1].content += message["content"]
+            elif "Qwen2" in self.model:
+                tools_str = ""
+                for tool in entry["tool"]:
+                    tools_str += f"{json.dumps(tool, indent=4)}\n"
+                messages = [
+                    ChatCompletionMessage(
+                        content=(
+                            "You are Qwen, created by Alibaba Cloud. You are a helpful assistant.\n\n"
+                            "# Tools\n\n"
+                            "You may call one or more functions to assist with the user query.\n\n"
+                            "You are provided with function signatures within <tools></tools> XML tags:\n"
+                            f"<tools>\n{tools_str}</tools>\n\n"
+                            "For each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\n"
+                            '<tool_call>\n{"name": <function-name>, "arguments": <args-json-object>}\n</tool_call>'
+                        ),
+                        role="system"
+                    ),
+                    ChatCompletionMessage(
+                        content="",
+                        role="user"
+                    )
+                ]
                 for message in entry["question"]:
                     if message["role"] == "system":
                         messages[0].content += message["content"]
