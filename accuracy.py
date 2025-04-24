@@ -98,7 +98,12 @@ def convert_calls_to_json(stringified_calls: str, model: str) -> List[Dict[str, 
             ):
                 continue
             function_calls_json.append(
-                {"function": {"name": result["name"], "arguments": result["parameters"]}}
+                {
+                    "function": {
+                        "name": result["name"],
+                        "arguments": result["parameters"],
+                    }
+                }
             )
     elif "Qwen2" in model:
         start = 0
@@ -108,7 +113,9 @@ def convert_calls_to_json(stringified_calls: str, model: str) -> List[Dict[str, 
                 break
             try:
                 decoder = json.JSONDecoder()
-                result, end_index = decoder.raw_decode(stringified_calls, index + len("<tool_call>\n"))
+                result, end_index = decoder.raw_decode(
+                    stringified_calls, index + len("<tool_call>\n")
+                )
             except:  # pylint: disable=bare-except
                 start = index + 1
                 continue
@@ -207,7 +214,9 @@ def main(args: argparse.argparse.Namespace):
             for request in request_records:
                 store_record.append({"id": request.request_id})
                 store_record[-1]["output"] = request.output_str
-                store_record[-1]["call"] = convert_calls_to_json(request.output_str, args.model)
+                store_record[-1]["call"] = convert_calls_to_json(
+                    request.output_str, args.model
+                )
             with open(f"{output_dir}/result.json", "w") as f:
                 json.dump(store_record, f, indent=4)
 

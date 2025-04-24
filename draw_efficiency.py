@@ -13,7 +13,12 @@ models = [
         "Llama-3.1-8B-Instruct-q0f16-MLC",
         "Llama-3.1-70B-Instruct-q0f16-MLC",
     ],
-    ["Llama-3.2-1B-Instruct", "Llama-3.2-3B-Instruct", "Llama-3.1-8B-Instruct", "Llama-3.1-70B-Instruct"],
+    [
+        "Llama-3.2-1B-Instruct",
+        "Llama-3.2-3B-Instruct",
+        "Llama-3.1-8B-Instruct",
+        "Llama-3.1-70B-Instruct",
+    ],
 ]
 dataset = "BFCL_v3_multiple"
 query_to_title = {

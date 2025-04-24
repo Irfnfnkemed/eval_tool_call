@@ -109,7 +109,7 @@ class GorillaDataset(Dataset):  # pylint: disable=too-few-public-methods
         tokenizer: AutoTokenizer,
         use_stag: bool,
         api_endpoint: str,
-        model: str
+        model: str,
     ) -> None:
         self.tokenizer = tokenizer
         self.use_stag = use_stag
@@ -271,17 +271,21 @@ class GorillaDataset(Dataset):  # pylint: disable=too-few-public-methods
                             }
                             for tool in entry["tool"]
                         ],
-                        "triggers": ['<tool_call>'],
+                        "triggers": ["<tool_call>"],
                     }
             else:
                 response_format = {
                     "type": "text",
                 }
-                
+
             if "Llama-3.1" in self.model:
                 messages = [
                     ChatCompletionMessage(
-                        content="Cutting Knowledge Date: December 2023\nToday Date: 26 Jul 2024\n\n" if self.api_endpoint == "mlc" else "",
+                        content=(
+                            "Cutting Knowledge Date: December 2023\nToday Date: 26 Jul 2024\n\n"
+                            if self.api_endpoint == "mlc"
+                            else ""
+                        ),
                         role="system",
                     ),
                     ChatCompletionMessage(
@@ -289,10 +293,10 @@ class GorillaDataset(Dataset):  # pylint: disable=too-few-public-methods
                             "Given the following functions, please respond with a JSON for a function call with its proper arguments that best answers the given prompt.\n\n"
                             'Respond in the format {"name": function name, "parameters": dictionary of argument name and its value}. Do not use variables.\n\n'
                         ),
-                        role="user"
-                    )
+                        role="user",
+                    ),
                 ]
-                for tool in entry['tool']:
+                for tool in entry["tool"]:
                     messages[1].content += f"{json.dumps(tool)}\n\n"
                 for message in entry["question"]:
                     if message["role"] == "system":
@@ -314,12 +318,9 @@ class GorillaDataset(Dataset):  # pylint: disable=too-few-public-methods
                             "For each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\n"
                             '<tool_call>\n{"name": <function-name>, "arguments": <args-json-object>}\n</tool_call>'
                         ),
-                        role="system"
+                        role="system",
                     ),
-                    ChatCompletionMessage(
-                        content="",
-                        role="user"
-                    )
+                    ChatCompletionMessage(content="", role="user"),
                 ]
                 for message in entry["question"]:
                     if message["role"] == "system":
@@ -329,8 +330,7 @@ class GorillaDataset(Dataset):  # pylint: disable=too-few-public-methods
             else:
                 messages = [
                     ChatCompletionMessage(
-                        content=
-                            (
+                        content=(
                             "Tool Instructions:"
                             "You have access to the following tool functions:"
                             f"{entry['tool']}"
@@ -364,9 +364,7 @@ class GorillaDataset(Dataset):  # pylint: disable=too-few-public-methods
                         response_format=response_format,
                         model="",
                         max_tokens=output_length,
-                        debug_config=DebugConfig(
-                            grammar_execution_mode="constraint"
-                        ),
+                        debug_config=DebugConfig(grammar_execution_mode="constraint"),
                     ),
                     metrics=Metrics(
                         success=False,
@@ -408,6 +406,11 @@ def create_dataset(  # pylint: disable=too-many-return-statements,too-many-branc
             args.apply_chat_template is False
         ), "Gorilla dataset does not support applying chat template"
         return GorillaDataset(
-            args.dataset, args.dataset_path, tokenizer, args.use_stag, args.api_endpoint, args.model
+            args.dataset,
+            args.dataset_path,
+            tokenizer,
+            args.use_stag,
+            args.api_endpoint,
+            args.model,
         )
     raise ValueError(f"Unrecognized dataset {args.dataset}")

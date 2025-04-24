@@ -693,14 +693,20 @@ def get_correct_schema_rate(
                     continue
                 call_number += 1
                 call = {
-                    "function": {"name": result["name"], "arguments": result["parameters"]}
+                    "function": {
+                        "name": result["name"],
+                        "arguments": result["parameters"],
+                    }
                 }
             elif "Qwen2" in model:
                 if "name" not in result or "arguments" not in result:
                     continue
                 call_number += 1
                 call = {
-                    "function": {"name": result["name"], "arguments": result["arguments"]}
+                    "function": {
+                        "name": result["name"],
+                        "arguments": result["arguments"],
+                    }
                 }
             err_list = []
             for tool in entry["tools"]:
