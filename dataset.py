@@ -108,11 +108,13 @@ class GorillaDataset(Dataset):  # pylint: disable=too-few-public-methods
         dataset_path: str,
         tokenizer: AutoTokenizer,
         use_stag: bool,
-        use_jf: bool = True,
+        api_endpoint: str,
+        model: str
     ) -> None:
         self.tokenizer = tokenizer
-        self.use_jf = use_jf
         self.use_stag = use_stag
+        self.api_endpoint = api_endpoint
+        self.model = model
         self.gorilla_data = []
         base_url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/main/berkeley-function-call-leaderboard/data"
         id = 0
@@ -249,34 +251,58 @@ class GorillaDataset(Dataset):  # pylint: disable=too-few-public-methods
                 response_format = {
                     "type": "text",
                 }
-            messages = [
-                ChatCompletionMessage(
-                    content=(
-                        "Tool Instructions:"
-                        "You have access to the following tool functions:"
-                        f"{entry['tool']}"
-                        "If a you choose to call a function, you should ONLY reply in the following format:"
-                        '`{"name": func_name, "parameters": parameters(JSON dict)}`'
-                        "Here is an example,"
-                        '`{"name": "get_time", "parameters": {"location": "Pittsburgh"}}}}`'
-                        "Reminder:"
-                        "- Function calls MUST follow the specified format"
-                        "- Required parameters MUST be specified"
-                        "- You should not repeat or miss the call"
-                        "- You should response with at least one function calling"
+                
+            if "Llama-3.1" in self.model:
+                messages = [
+                    ChatCompletionMessage(
+                        content="Cutting Knowledge Date: December 2023\nToday Date: 26 Jul 2024\n\n" if self.api_endpoint == "mlc" else "",
+                        role="system",
                     ),
-                    role="system",
-                )
-            ]
-            for message in entry["question"]:
-                if message["role"] == "system":
-                    messages[0].content += message["content"]
-                else:
-                    messages.append(
-                        ChatCompletionMessage(
-                            content=message["content"], role=message["role"]
-                        )
+                    ChatCompletionMessage(
+                        content=(
+                            "Given the following functions, please respond with a JSON for a function call with its proper arguments that best answers the given prompt.\n\n"
+                            'Respond in the format {"name": function name, "parameters": dictionary of argument name and its value}. Do not use variables.\n\n'
+                        ),
+                        role="user"
                     )
+                ]
+                for tool in entry['tool']:
+                    messages[1].content += f"{json.dumps(tool)}\n\n"
+                for message in entry["question"]:
+                    if message["role"] == "system":
+                        messages[0].content += message["content"]
+                    else:
+                        messages[1].content += message["content"]
+            else:
+                messages = [
+                    ChatCompletionMessage(
+                        content=
+                            (
+                            "Tool Instructions:"
+                            "You have access to the following tool functions:"
+                            f"{entry['tool']}"
+                            "If a you choose to call a function, you should ONLY reply in the following format:"
+                            '`{"name": func_name, "parameters": parameters(JSON dict)}`'
+                            "Here is an example,"
+                            '`{"name": "get_time", "parameters": {"location": "Pittsburgh"}}}}`'
+                            "Reminder:"
+                            "- Function calls MUST follow the specified format"
+                            "- Required parameters MUST be specified"
+                            "- You should not repeat or miss the call"
+                            "- You should response with at least one function calling"
+                        ),
+                        role="system",
+                    )
+                ]
+                for message in entry["question"]:
+                    if message["role"] == "system":
+                        messages[0].content += message["content"]
+                    else:
+                        messages.append(
+                            ChatCompletionMessage(
+                                content=message["content"], role=message["role"]
+                            )
+                        )
             request_records.append(
                 RequestRecord(
                     request_id=entry["id"],
@@ -286,9 +312,7 @@ class GorillaDataset(Dataset):  # pylint: disable=too-few-public-methods
                         model="",
                         max_tokens=output_length,
                         debug_config=DebugConfig(
-                            grammar_execution_mode=(
-                                "jump_forward" if self.use_jf else "constraint"
-                            )
+                            grammar_execution_mode="constraint"
                         ),
                     ),
                     metrics=Metrics(
@@ -331,6 +355,6 @@ def create_dataset(  # pylint: disable=too-many-return-statements,too-many-branc
             args.apply_chat_template is False
         ), "Gorilla dataset does not support applying chat template"
         return GorillaDataset(
-            args.dataset, args.dataset_path, tokenizer, args.use_stag, args.use_jf
+            args.dataset, args.dataset_path, tokenizer, args.use_stag, args.api_endpoint, args.model
         )
     raise ValueError(f"Unrecognized dataset {args.dataset}")

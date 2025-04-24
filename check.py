@@ -17,6 +17,7 @@ SUPPORTED_DATASET = [
 ]
 
 SUPPORTED_MODEL = [
+    "Llama-3.1-70B-Instruct-q0f16-MLC",
     "Llama-3.2-1B-Instruct-q0f32-MLC",
     "Llama-3.2-1B-Instruct-q0f16-MLC",
     "Llama-3.2-3B-Instruct-q0f32-MLC",

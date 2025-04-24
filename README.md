@@ -7,7 +7,7 @@ The evaluation script is modified based on the MLC-LLM bench and BFCL ast checke
 First launch the server.
 ```bash
 mlc_llm serve HF://mlc-ai/Llama-3.1-8B-Instruct-q0f16-MLC --mode server \
---host 127.0.0.1 --port 8000 --enable-debug 
+--host 127.0.0.1 --port 8000 --enable-debug --prefix-cache-mode disable
 ```
 
 Than generate the raw data (w/ & w/o structural tag):
@@ -19,7 +19,7 @@ python accuracy.py --model Llama-3.1-8B-Instruct-q0f16-MLC \
 --num-requests 400 --num-warmup-requests 1 --request-rate inf \
 --host 127.0.0.1 --port 8000 \
 --api-endpoint mlc --output ./data/accuracy_raw \
---use-jf [--use-stag]
+[--use-stag]
 ```
 
 The raw data will be in `./data/accuracy_raw` directory. Finally process the raw data:
@@ -47,22 +47,22 @@ Note: you may need to modify `SUPPORTED_MODEL` and `SUPPORTED_DATASET` in `check
 Also first launch the server.
 ```bash
 mlc_llm serve HF://mlc-ai/Llama-3.1-8B-Instruct-q0f16-MLC --mode server \
---host 127.0.0.1 --port 8000 --enable-debug 
+--host 127.0.0.1 --port 8000 --enable-debug --prefix-cache-mode disable
 
 python -m sglang.launch_server --model-path meta-llama/Meta-Llama-3.1-8B-Instruct \
---host 127.0.0.1 --port 30000 
+--host 127.0.0.1 --port 30000 --disable-radix-cache
 ```
 
-Than generate the raw data (w/ & w/o structural tag, w/ & w/o jump-forward-decoding, mlc/sglang backend):
+Than generate the raw data (w/ & w/o structural tag, mlc/sglang backend):
 
 ```bash
 python efficiency.py --model Llama-3.1-8B-Instruct-q0f16-MLC \
 --tokenizer /dist/Llama-3.1-8B-Instruct-q0f16-MLC \
 --dataset BFCL_v3_multiple --dataset-path ./data/dataset --num-gpus 1 \
---num-warmup-requests 1 --num-requests 200 \
+--num-warmup-requests 200 --num-requests 200 \
 --host 127.0.0.1 --port 8000 --num-concurrent-requests 1 \
 --api-endpoint [mlc|sglang] --output ./data/efficiecy  \
---stream [--use-stag] [--use-jf] 
+--stream [--use-stag]
 ```
 
 The bench data will be in `./data/efficiecy` directory. Run the script to generate summary pictures:

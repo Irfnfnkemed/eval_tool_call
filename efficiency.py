@@ -178,13 +178,7 @@ def main(args: argparse.argparse.Namespace):
             bench[args.model] = {}
         if args.dataset not in bench[args.model]:
             bench[args.model][args.dataset] = {}
-        if args.use_stag:
-            if args.use_jf:
-                cate = "use_stag_jf"
-            else:
-                cate = "use_stag_no_jf"
-        else:
-            cate = "no_stag"
+        cate = "use_stag" if args.use_stag else "no_stag"
         bench[args.model][args.dataset][cate] = df.to_dict(orient="records")[0]
         with open(f"{output_path}/bench.json", "w") as f:
             json.dump(bench, f, indent=4)
@@ -440,10 +434,4 @@ if __name__ == "__main__":
         action="store_true",
         help="Whether to set structural tag.",
     )
-    parser.add_argument(
-        "--use-jf",
-        action="store_true",
-        help="Whether to use jump-forward-decoding.",
-    )
-
     main(parser.parse_args())
