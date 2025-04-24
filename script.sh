@@ -13,14 +13,27 @@ export EFF="./data/efficiency"
 
 # Launch the server
 
-# Launch mlc-llm server
+# Launch mlc-llm server(1 gpu)
 mlc_llm serve $MODEL_PATH --mode server \
 --host $SERVER_ADDR --port $SERVER_PORT --enable-debug --prefix-cache-mode disable
 
-# Or launch sglang server
+# Or launch sglang server(1 gpu)
 python -m sglang.launch_server --model-path $MODEL_PATH \
 --host $SERVER_ADDR --port $SERVER_PORT --disable-radix-cache  --dtype float16 \
 --enable-torch-compile 
+
+# For large model(e.g., Llama-3.1-70B)(multiple gpu)
+git clone https://huggingface.co/mlc-ai/Llama-3.1-70B-Instruct-q0f16-MLC
+python3 -m mlc_llm compile ./Llama-3.1-70B-Instruct-q0f16-MLC \
+        --device nvidia/nvidia-h100 --opt O3 --overrides "tensor_parallel_shards=4" \
+        -o ./Llama-3.1-70B-Instruct-q0f16-MLC/lib.so
+
+mlc_llm serve ./Llama-3.1-70B-Instruct-q0f16-MLC --model-lib ./Llama-3.1-70B-Instruct-q0f16-MLC/lib.so \
+--mode server --host $SERVER_ADDR --port $SERVER_PORT --enable-debug --prefix-cache-mode disable
+
+# Or launch sglang server(multuple gpu)
+python -m sglang.launch_server --model-path $MODEL_PATH \
+--host $SERVER_ADDR --port $SERVER_PORT --disable-radix-cache  --dtype float16 
 
 
 
