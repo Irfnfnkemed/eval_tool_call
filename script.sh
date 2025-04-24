@@ -32,7 +32,7 @@ mlc_llm serve ./Llama-3.1-70B-Instruct-q0f16-MLC --model-lib ./Llama-3.1-70B-Ins
 --mode server --host $SERVER_ADDR --port $SERVER_PORT --enable-debug --prefix-cache-mode disable
 
 # Or launch sglang server(multuple gpu)
-python -m sglang.launch_server --model-path $MODEL_PATH \
+python -m sglang.launch_server --model-path $MODEL_PATH --tp 4 \
 --host $SERVER_ADDR --port $SERVER_PORT --disable-radix-cache  --dtype float16 
 
 
